@@ -8,28 +8,11 @@ import LatestNews from "../../components/LatestNews/LatestNews"
 import NewsByFilters from "../../components/NewsByFilters/NewsByFilters"
 
 const Main = () => {
-    const { filters, changeFilter } = useFilters({
-        page_number: 1,
-        page_size: PAGE_SIZE,
-        category: null,
-        keywords: ""
-    })
-
-    const deboundedKeywords = useDebounce(filters.keywords, 1500)
-
-    const { data, isLoading } = useFetch(getNews, {
-        ...filters,
-        keywords: deboundedKeywords
-    })
-
     return (
         <main className={classes.main}>
-            <LatestNews isLoading={isLoading} banners={data && data.news} />
+            <LatestNews />
 
-            <NewsByFilters filters={filters}
-                changeFilter={changeFilter}
-                isLoading={isLoading}
-                news={data?.news} />
+            <NewsByFilters />
         </main>
     )
 }
