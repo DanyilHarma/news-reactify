@@ -1,14 +1,11 @@
-import { getCategories, getNews } from "../../api/apiNews"
-import NewsBanner from "../../components/NewsBanner/NewsBanner"
+import { getNews } from "../../api/apiNews"
 import classes from "./style.module.css"
-import NewsList from "../../components/NewsList/NewsList"
-import Pagination from "../../components/Pagination/Pagination"
-import Categories from "../../components/Categories/Categories"
-import Search from "../../components/Search/Search"
 import { useDebounce } from "../../helpers/hooks/useDebounce"
-import { PAGE_SIZE, TOTAL_PAGES } from "../../constants/constants"
+import { PAGE_SIZE } from "../../constants/constants"
 import { useFetch } from "../../helpers/hooks/useFetch"
 import { useFilters } from "../../helpers/hooks/useFilters"
+import LatestNews from "../../components/LatestNews/LatestNews"
+import NewsByFilters from "../../components/NewsByFilters/NewsByFilters"
 
 const Main = () => {
     const { filters, changeFilter } = useFilters({
@@ -25,34 +22,14 @@ const Main = () => {
         keywords: deboundedKeywords
     })
 
-    const { data: dataCetegories } = useFetch(getCategories)
-
-    const handleNextPage = () => {
-        if (filters.page_number < TOTAL_PAGES) changeFilter("page_number", filters.page_number + 1)
-    }
-    const handlePrevPage = () => {
-        if (filters.page_number > 1) changeFilter("page_number", filters.page_number - 1)
-    }
-    const handlePageClick = (pageNumber) => {
-        changeFilter("page_number", pageNumber)
-    }
-
     return (
         <main className={classes.main}>
-            {dataCetegories &&
-                <Categories categories={dataCetegories.categories}
-                    setSelectedCategory={(category) => changeFilter("category", category)}
-                    selectedCategory={filters.category} />}
+            <LatestNews isLoading={isLoading} banners={data && data.news} />
 
-            <Search keywords={filters.keywords} setKeywords={(keywords) => changeFilter("keywords", keywords)} />
-
-            <NewsBanner isLoading={isLoading} item={data && data.news && data.news[0]} />
-
-            <Pagination totalPages={TOTAL_PAGES}
-                handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} handlePageClick={handlePageClick} currentPage={filters.page_number}
-            />
-
-            <NewsList isLoading={isLoading} news={data?.news} />
+            <NewsByFilters filters={filters}
+                changeFilter={changeFilter}
+                isLoading={isLoading}
+                news={data?.news} />
         </main>
     )
 }
