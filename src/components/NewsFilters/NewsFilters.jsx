@@ -2,6 +2,7 @@ import { getCategories } from "../../api/apiNews"
 import { useFetch } from "../../helpers/hooks/useFetch"
 import Categories from "../Categories/Categories"
 import Search from "../Search/Search"
+import Slider from "../Slider/Slider"
 import classes from "./style.module.css"
 
 const NewsFilters = ({ filters, changeFilter }) => {
@@ -10,9 +11,12 @@ const NewsFilters = ({ filters, changeFilter }) => {
     return (
         <div className={classes.filters}>
             {dataCetegories &&
-                <Categories categories={dataCetegories.categories}
-                    setSelectedCategory={(category) => changeFilter("category", category)}
-                    selectedCategory={filters.category} />}
+                <Slider>
+                    <Categories categories={dataCetegories.categories}
+                        setSelectedCategory={(category) => changeFilter("category", category)}
+                        selectedCategory={filters.category} />
+                </Slider>
+            }
 
             <Search keywords={filters.keywords} setKeywords={(keywords) => changeFilter("keywords", keywords)} />
         </div>
