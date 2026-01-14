@@ -43,7 +43,8 @@ const NewsByFilters = () => {
                 handleNextPage={handleNextPage}
                 handlePrevPage={handlePrevPage}
                 handlePageClick={handlePageClick}
-                currentPage={filters.page_number}>
+                currentPage={filters.page_number}
+            >
                 <NewsList isLoading={isLoading} news={data?.news} />
             </PaginationWrapper>
         </section>
