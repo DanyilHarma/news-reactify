@@ -8,7 +8,7 @@
     border-bottom: 1px solid #f2f4f5;
 }
 
-. .info {
+.info {
     display: flex;
     flex-direction: column;
     gap: 12px;
