@@ -12,7 +12,7 @@ interface Props {
 }
 
 const NewsFilters = ({ filters, changeFilter }: Props) => {
-    const { data: dataCetegories } = useFetch<CategoriesApiResponse, void>(getCategories)
+    const { data: dataCetegories } = useFetch<CategoriesApiResponse, void>(getCategories);
 
     return (
         <div className={classes.filters}>
@@ -24,7 +24,8 @@ const NewsFilters = ({ filters, changeFilter }: Props) => {
                 </Slider>
             }
 
-            <Search keywords={filters.keywords} setKeywords={(keywords) => changeFilter("keywords", keywords)} />
+            <Search keywords={filters.keywords}
+                setKeywords={(keywords) => changeFilter("keywords", keywords)} />
         </div>
     )
 }
